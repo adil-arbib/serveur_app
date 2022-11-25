@@ -1,0 +1,18 @@
+.list-view .list-cell:even {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #FFFFFF;
+}
+.list-view .list-cell:odd {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #FFFFFF;
+}
+
+
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color :derive(#B8B8B8,50.0%);
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 1.0em;
+}
+
