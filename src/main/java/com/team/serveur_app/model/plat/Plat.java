@@ -1,6 +1,6 @@
 package com.team.serveur_app.model.plat;
 
-import com.team.serveur_app.model.categorie.Category;
+import com.team.serveur_app.model.categorie.Categorie;
 
 public class Plat {
     protected int id;
@@ -8,36 +8,36 @@ public class Plat {
     protected float price;
     protected String description;
     protected byte[] img;
-    protected Category category;
+    protected Categorie categorie;
 
-    public Plat(int id, String nom, float price, String description, byte[] img, Category category) {
+    public Plat(int id, String nom, float price, String description, byte[] img, Categorie categorie) {
         this.id = id;
         this.nom = nom;
         this.price = price;
         this.description = description;
         this.img = img;
-        this.category = category;
+        this.categorie = categorie;
     }
-    public Plat( String nom, float price, String description, byte[] img, Category category) {
+    public Plat( String nom, float price, String description, byte[] img, Categorie categorie) {
         this.nom = nom;
         this.price = price;
         this.description = description;
         this.img = img;
-        this.category = category;
+        this.categorie = categorie;
     }
 
     public Plat() {}
 
-    public Plat(String nom, float price, Category category) {
+    public Plat(String nom, float price, Categorie categorie) {
         this.nom = nom;
         this.price = price;
-        this.category = category;
+        this.categorie = categorie;
     }
 
     public Plat(Plat p){
         this.id = p.id;
         this.nom = p.nom;
-        this.category = p.category;
+        this.categorie = p.categorie;
         this.price = p.price;
         this.img = p.img;
         this.description = p.description;
@@ -83,12 +83,12 @@ public class Plat {
         this.img = img;
     }
 
-    public Category getCategory() {
-        return category;
+    public Categorie getCategorie() {
+        return categorie;
     }
 
-    public void setCategorie(Category category) {
-        this.category = category;
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
     }
 
     @Override
@@ -99,7 +99,9 @@ public class Plat {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", img=" + img.length +
-                ", categorie=" + category.toString() +
+                ", categorie=" + categorie.toString() +
                 '}';
     }
+
 }
+

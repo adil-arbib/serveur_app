@@ -1,16 +1,29 @@
 package com.team.serveur_app.model.categorie;
 
-public class Category {
-    private int id;
-    private String libelle;
 
-    public Category(int id, String libelle) {
+public class Categorie {
+
+    protected int id;
+    protected String libelle;
+
+    public Categorie(int id, String libelle) {
         this.id = id;
         this.libelle = libelle;
     }
 
-    public Category(String libelle) {
+    public Categorie(String libelle) {
         this.libelle = libelle;
+    }
+
+    public Categorie() {
+    }
+
+    @Override
+    public String toString() {
+        return "Categorie{" +
+                "id=" + id +
+                ", libelle='" + libelle + '\'' +
+                '}';
     }
 
     public int getId() {
@@ -27,13 +40,5 @@ public class Category {
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
-    }
-
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", libelle='" + libelle + '\'' +
-                '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.team.serveur_app.model.serveur;
 
 public class Serveur {
+
     protected int id;
     protected String nom;
     protected String prenom;
