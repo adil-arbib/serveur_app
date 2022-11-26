@@ -6,35 +6,36 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MainActivityController implements Initializable {
     @FXML
+    GridPane gridPane;
+    @FXML
     ListView<Label> horizontalListView;
-    private Label selectedLabel;
     private ArrayList<Category> allCategoriesList;
 
     ObservableList<Label> categoriesList = FXCollections.observableArrayList();
-
+    private ArrayList<AnchorPane> nodes = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Label lbl1 = getCustomLabel("Drinks");
-        selectedLabel = lbl1;
-        selectedLabel.getStylesheets().add(App.class.getResource("css/labelSelected.css").toExternalForm());
-        categoriesList.add(lbl1);
 
         displayCategories();
+        displayAssociatedPlats(null);
+
+
 
 
 
@@ -42,11 +43,32 @@ public class MainActivityController implements Initializable {
         horizontalListView.setItems(categoriesList);
 
         horizontalListView.setOnMouseClicked(event -> {
-            Label label = horizontalListView.getSelectionModel().getSelectedItem();
             System.out.println(horizontalListView.getSelectionModel().getSelectedIndex());
-            changeColor(label);
-
+            displayAssociatedPlats(null);
         });
+    }
+
+    private void displayAssociatedPlats(Category category){
+        // test
+        gridPane.getChildren().removeAll(nodes);
+        nodes.clear();
+        int row = 0 , column = 0;
+        Random random = new Random();
+        int size = random.nextInt(5,15);
+        try {
+            for(int i=0; i<size; i++){
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(App.class.getResource("fxml/plat-item.fxml"));
+                AnchorPane anchorPane = loader.load();
+                if(column==3){
+                    column=0;
+                    row++;
+                }
+                gridPane.add(anchorPane, column++, row);
+                nodes.add(anchorPane);
+            }
+
+        } catch (IOException e) {}
     }
 
     private void displayCategories(){
@@ -66,12 +88,9 @@ public class MainActivityController implements Initializable {
                 new Category("other")));
     }
 
-    private void changeColor(Label label) {
-        selectedLabel.getStylesheets().remove(0);
-        selectedLabel.getStylesheets().add(App.class.getResource("css/labelStyle.css").toExternalForm());
-        label.getStylesheets().add(App.class.getResource("css/labelSelected.css").toExternalForm());
-        selectedLabel = label;
-    }
+//    private void changeColor(Label label) {
+//        label.getStylesheets().add(App.class.getResource("css/labelSelected.css").toExternalForm());
+//    }
 
     private Label getCustomLabel(String name){
         Label label = new Label(name);
