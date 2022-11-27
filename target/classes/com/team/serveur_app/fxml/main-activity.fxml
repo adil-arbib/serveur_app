@@ -34,5 +34,6 @@
             <Font name="Arial" size="25.0" />
          </font>
       </Label>
+      <Label fx:id="testLabel" layoutX="1095.0" layoutY="88.0" text="test" />
    </children>
 </AnchorPane>
