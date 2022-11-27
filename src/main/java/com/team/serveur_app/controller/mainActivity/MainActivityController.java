@@ -7,7 +7,9 @@ import com.team.serveur_app.model.categorie.Categorie;
 import com.team.serveur_app.model.categorie.CategorieDAO;
 import com.team.serveur_app.model.plat.Plat;
 import com.team.serveur_app.model.plat.PlatDAO;
+import com.team.serveur_app.utils.MinusClickListener;
 import com.team.serveur_app.utils.PlatOnClickListener;
+import com.team.serveur_app.utils.PlusClickListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -28,33 +30,40 @@ import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.util.*;
 
-public class MainActivityController implements Initializable, PlatOnClickListener{
+public class MainActivityController implements Initializable, PlatOnClickListener,
+        PlusClickListener, MinusClickListener
+{
     @FXML
     GridPane gridPane, rightGridPane;
     @FXML
     ListView<Label> horizontalListView;
+    @FXML
+    Label testLabel;
     private ArrayList<Categorie> availableCategories;
     private ArrayList<Plat> selectedPlats = new ArrayList<>();
     private Map<Plat, AddedPlatController> addedPlatHashMap = new HashMap<>();
+    private Map<Plat, AnchorPane> anchorPaneMap = new HashMap<>();
     ObservableList<Label> categoriesList = FXCollections.observableArrayList();
     private ArrayList<AnchorPane> nodes = new ArrayList<>();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         displayCategories();
-
-
         horizontalListView.getStylesheets().add(App.class.getResource("css/listView.css").toExternalForm());
         horizontalListView.setItems(categoriesList);
-
         horizontalListView.setOnMouseClicked(event -> {
             int index = horizontalListView.getSelectionModel().getSelectedIndex();
             try {
                 displayAssociatedPlats(availableCategories.get(index));
             } catch (SQLException e) {
                 e.printStackTrace();
+            }
+        });
+        testLabel.setOnMouseClicked(e->{
+            System.out.println("####################");
+            for(Plat p : selectedPlats){
+                System.out.println(p.getNom());
             }
         });
 
@@ -80,7 +89,6 @@ public class MainActivityController implements Initializable, PlatOnClickListene
                 }
                 gridPane.add(anchorPane, column++, row);
                 nodes.add(anchorPane);
-
                 GridPane.setMargin(anchorPane, new Insets(10));
             }
 
@@ -126,21 +134,38 @@ public class MainActivityController implements Initializable, PlatOnClickListene
     public void onPlatClick(Plat plat) throws IOException {
         selectedPlats.add(plat);
         if(addedPlatHashMap.containsKey(plat)){
-            addedPlatHashMap.get(plat).setData(plat,platCount(plat));
+            addedPlatHashMap.get(plat).setData(plat,platCount(plat),
+                    MainActivityController.this,
+                    MainActivityController.this
+            );
         }else {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("fxml/added-plat-item.fxml"));
             AnchorPane anchorPane = loader.load();
             AddedPlatController addedPlatController = loader.getController();
-            addedPlatController.setData(plat,platCount(plat));
+            addedPlatController.setData(plat,platCount(plat),
+                    MainActivityController.this,
+                    MainActivityController.this);
 
             rightGridPane.add(anchorPane, 0, sidePaneRow++);
-            nodes.add(anchorPane);
-
+            anchorPaneMap.put(plat, anchorPane);
             GridPane.setMargin(anchorPane, new Insets(10));
-
             addedPlatHashMap.put(plat, addedPlatController);
         }
 
+    }
+
+    @Override
+    public void onMinusClick(Plat plat, int count) {
+        if(count==0){
+            rightGridPane.getChildren().remove(anchorPaneMap.get(plat));
+            addedPlatHashMap.remove(plat);
+        }
+        selectedPlats.remove(plat);
+    }
+
+    @Override
+    public void onPlusClick(Plat plat, int count) {
+        selectedPlats.add(plat);
     }
 }
