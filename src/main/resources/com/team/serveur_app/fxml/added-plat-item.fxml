@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="126.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team.serveur_app.controller.plat.AddedPlatController">
+   <children>
+      <ImageView fx:id="img" fitHeight="94.0" fitWidth="76.0" layoutX="20.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Label fx:id="nameLabel" layoutX="101.0" layoutY="14.0" text="Poms" AnchorPane.leftAnchor="101.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="totalPriceLabel" layoutX="100.0" layoutY="84.0" text="70DH" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="100.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="countLabel" layoutX="195.0" layoutY="88.0" text="3" AnchorPane.bottomAnchor="24.0" AnchorPane.rightAnchor="45.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="iconMinus" fitHeight="17.0" fitWidth="17.0" layoutX="169.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="60.0">
+         <image>
+            <Image url="@../img/minus.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="iconPlus" fitHeight="17.0" fitWidth="17.0" layoutX="211.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="25.0">
+         <image>
+            <Image url="@../img/plus.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

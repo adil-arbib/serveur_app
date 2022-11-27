@@ -10,21 +10,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ItemPlatController implements Initializable {
     @FXML
-    private Label nameLabel;
-
-    @FXML
-    private Label priceLable;
+    public Label  nameLabel, priceLabel;
 
     @FXML
     private ImageView img;
 
     @FXML
-    private void click(MouseEvent mouseEvent) {
+    private void click(MouseEvent mouseEvent) throws IOException {
         myListener.onPlatClick(plat);
     }
 
@@ -35,7 +33,7 @@ public class ItemPlatController implements Initializable {
         this.plat = plat;
         this.myListener = myListener;
         nameLabel.setText(plat.getNom());
-        priceLable.setText(plat.getPrice()+" DH");
+        priceLabel.setText(plat.getPrice()+" DH");
         Image image = new Image(new ByteArrayInputStream(plat.getImg()),200,200,true,true);
         img.setImage(image);
     }

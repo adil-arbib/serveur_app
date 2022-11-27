@@ -1,6 +1,7 @@
 package com.team.serveur_app.controller.mainActivity;
 
 import com.team.serveur_app.App;
+import com.team.serveur_app.controller.plat.AddedPlatController;
 import com.team.serveur_app.controller.plat.ItemPlatController;
 import com.team.serveur_app.model.categorie.Categorie;
 import com.team.serveur_app.model.categorie.CategorieDAO;
@@ -27,17 +28,17 @@ import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.util.*;
 
-public class MainActivityController implements Initializable {
+public class MainActivityController implements Initializable, PlatOnClickListener{
     @FXML
-    GridPane gridPane;
+    GridPane gridPane, rightGridPane;
     @FXML
     ListView<Label> horizontalListView;
     private ArrayList<Categorie> availableCategories;
-
+    private ArrayList<Plat> selectedPlats = new ArrayList<>();
+    private Map<Plat, AddedPlatController> addedPlatHashMap = new HashMap<>();
     ObservableList<Label> categoriesList = FXCollections.observableArrayList();
     private ArrayList<AnchorPane> nodes = new ArrayList<>();
 
-    private PlatOnClickListener myListener;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,12 +58,7 @@ public class MainActivityController implements Initializable {
             }
         });
 
-        myListener = new PlatOnClickListener() {
-            @Override
-            public void onPlatClick(Plat plat) {
-                System.out.println("added " + plat.getNom());
-            }
-        };
+
     }
 
     private void displayAssociatedPlats(Categorie category) throws SQLException {
@@ -77,22 +73,12 @@ public class MainActivityController implements Initializable {
                 loader.setLocation(App.class.getResource("fxml/plat-item.fxml"));
                 AnchorPane anchorPane = loader.load();
                 ItemPlatController itemController = loader.getController();
-                itemController.setData(plat,myListener);
+                itemController.setData(plat,MainActivityController.this);
                 if(column==3){
                     column=0;
                     row++;
                 }
                 gridPane.add(anchorPane, column++, row);
-                //set grid width
-                gridPane.setMinWidth(Region.USE_COMPUTED_SIZE);
-                gridPane.setPrefWidth(Region.USE_COMPUTED_SIZE);
-                gridPane.setMaxWidth(Region.USE_PREF_SIZE);
-
-                //set grid height
-                gridPane.setMinHeight(Region.USE_COMPUTED_SIZE);
-                gridPane.setPrefHeight(Region.USE_COMPUTED_SIZE);
-                gridPane.setMaxHeight(Region.USE_PREF_SIZE);
-
                 nodes.add(anchorPane);
 
                 GridPane.setMargin(anchorPane, new Insets(10));
@@ -124,5 +110,37 @@ public class MainActivityController implements Initializable {
         Label label = new Label(name);
         label.getStylesheets().add(App.class.getResource("css/labelStyle.css").toExternalForm());
         return label;
+    }
+
+    private int platCount(Plat plat){
+        int count = 0;
+        for(Plat p : selectedPlats){
+            if(plat.equals(p)) count++;
+        }
+        return count;
+    }
+
+    int sidePaneRow = 0;
+
+    @Override
+    public void onPlatClick(Plat plat) throws IOException {
+        selectedPlats.add(plat);
+        if(addedPlatHashMap.containsKey(plat)){
+            addedPlatHashMap.get(plat).setData(plat,platCount(plat));
+        }else {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("fxml/added-plat-item.fxml"));
+            AnchorPane anchorPane = loader.load();
+            AddedPlatController addedPlatController = loader.getController();
+            addedPlatController.setData(plat,platCount(plat));
+
+            rightGridPane.add(anchorPane, 0, sidePaneRow++);
+            nodes.add(anchorPane);
+
+            GridPane.setMargin(anchorPane, new Insets(10));
+
+            addedPlatHashMap.put(plat, addedPlatController);
+        }
+
     }
 }
