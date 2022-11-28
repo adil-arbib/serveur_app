@@ -1,6 +1,7 @@
 package com.team.serveur_app.controller.plat;
 
 import com.team.serveur_app.model.plat.Plat;
+import com.team.serveur_app.utils.CancelPlatListener;
 import com.team.serveur_app.utils.MinusClickListener;
 import com.team.serveur_app.utils.PlusClickListener;
 import javafx.fxml.FXML;
@@ -17,18 +18,21 @@ public class AddedPlatController implements Initializable {
     @FXML
     Label nameLabel, totalPriceLabel, countLabel;
     @FXML
-    ImageView img, iconPlus, iconMinus;
+    ImageView img, iconPlus, iconMinus, iconClose;
 
     private Plat plat;
     private int count;
     private PlusClickListener plusListener;
     private MinusClickListener minusListener;
+    private CancelPlatListener cancelPlatListener;
 
-    public void setData(Plat plat, int count, PlusClickListener plusListener, MinusClickListener minusListener){
+    public void setData(Plat plat, int count, PlusClickListener plusListener, MinusClickListener minusListener,
+                        CancelPlatListener cancelPlatListener){
         this.plat = plat;
         this.count = count;
         this.plusListener = plusListener;
         this.minusListener = minusListener;
+        this.cancelPlatListener = cancelPlatListener;
         nameLabel.setText(plat.getNom());
         totalPriceLabel.setText(plat.getPrice()*count+" DH");
         countLabel.setText(count+"");
@@ -47,6 +51,8 @@ public class AddedPlatController implements Initializable {
             totalPriceLabel.setText(this.count*plat.getPrice()+" DH");
             plusListener.onPlusClick(plat, this.count);
         });
+
+        iconClose.setOnMouseClicked(e-> cancelPlatListener.onCancel(plat));
     }
 
 

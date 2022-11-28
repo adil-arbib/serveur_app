@@ -7,6 +7,7 @@ import com.team.serveur_app.model.categorie.Categorie;
 import com.team.serveur_app.model.categorie.CategorieDAO;
 import com.team.serveur_app.model.plat.Plat;
 import com.team.serveur_app.model.plat.PlatDAO;
+import com.team.serveur_app.utils.CancelPlatListener;
 import com.team.serveur_app.utils.MinusClickListener;
 import com.team.serveur_app.utils.PlatOnClickListener;
 import com.team.serveur_app.utils.PlusClickListener;
@@ -31,7 +32,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class MainActivityController implements Initializable, PlatOnClickListener,
-        PlusClickListener, MinusClickListener
+        PlusClickListener, MinusClickListener, CancelPlatListener
 {
     @FXML
     GridPane gridPane, rightGridPane;
@@ -136,6 +137,7 @@ public class MainActivityController implements Initializable, PlatOnClickListene
         if(addedPlatHashMap.containsKey(plat)){
             addedPlatHashMap.get(plat).setData(plat,platCount(plat),
                     MainActivityController.this,
+                    MainActivityController.this,
                     MainActivityController.this
             );
         }else {
@@ -144,6 +146,7 @@ public class MainActivityController implements Initializable, PlatOnClickListene
             AnchorPane anchorPane = loader.load();
             AddedPlatController addedPlatController = loader.getController();
             addedPlatController.setData(plat,platCount(plat),
+                    MainActivityController.this,
                     MainActivityController.this,
                     MainActivityController.this);
 
@@ -154,6 +157,7 @@ public class MainActivityController implements Initializable, PlatOnClickListene
         }
 
     }
+
 
     @Override
     public void onMinusClick(Plat plat, int count) {
@@ -167,5 +171,12 @@ public class MainActivityController implements Initializable, PlatOnClickListene
     @Override
     public void onPlusClick(Plat plat, int count) {
         selectedPlats.add(plat);
+    }
+
+    @Override
+    public void onCancel(Plat plat) {
+        selectedPlats.removeIf(p -> p.equals(plat));
+        rightGridPane.getChildren().remove(anchorPaneMap.get(plat));
+        addedPlatHashMap.remove(plat);
     }
 }

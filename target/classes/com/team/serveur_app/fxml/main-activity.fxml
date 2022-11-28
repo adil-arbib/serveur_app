@@ -12,17 +12,17 @@
 
 <AnchorPane prefHeight="683.0" prefWidth="1183.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team.serveur_app.controller.mainActivity.MainActivityController">
    <children>
-      <ScrollPane layoutX="969.0" layoutY="23.0" prefHeight="659.0" prefWidth="250.0" style="-fx-background-color: #CDCDCD;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
+      <ScrollPane layoutX="969.0" layoutY="23.0" prefHeight="659.0" prefWidth="300.0" style="-fx-background-color: #CDCDCD;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
          <content>
             <GridPane fx:id="rightGridPane" hgap="5.0" maxWidth="-Infinity" prefHeight="181.0" />
          </content></ScrollPane>
-      <ListView fx:id="horizontalListView" layoutX="6.0" layoutY="126.0" orientation="HORIZONTAL" prefHeight="73.0" prefWidth="933.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="120.0" />
+      <ListView fx:id="horizontalListView" layoutX="6.0" layoutY="126.0" orientation="HORIZONTAL" prefHeight="73.0" prefWidth="933.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="120.0" />
       <Label layoutX="32.0" layoutY="81.0" text="Categories" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="81.0">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="1.0" layoutY="193.0" prefHeight="491.0" prefWidth="933.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="192.0">
+      <ScrollPane layoutX="1.0" layoutY="193.0" prefHeight="491.0" prefWidth="933.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="192.0">
          <content>
             <GridPane fx:id="gridPane" hgap="5.0" maxWidth="-Infinity" prefHeight="181.0">
 
