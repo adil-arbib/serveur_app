@@ -19,6 +19,7 @@ public final class StageManager {
         mainStage.setResizable(resizable);
         mainStage.setScene(scene);
         mainStage.setResizable(resizable);
+        mainStage.setMaximized(true);
         mainStage.show();
     }
 

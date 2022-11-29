@@ -27,4 +27,8 @@ module com.team.serveur_app {
     opens com.team.serveur_app.controller.categorie to javafx.fxml;
     exports com.team.serveur_app.controller.mainActivity to javafx.fxml;
     opens com.team.serveur_app.controller.mainActivity;
+    exports com.team.serveur_app.controller.table to javafx.fxml;
+    opens com.team.serveur_app.controller.table;
+
+    exports com.team.serveur_app.controller to javafx.fxml;
 }

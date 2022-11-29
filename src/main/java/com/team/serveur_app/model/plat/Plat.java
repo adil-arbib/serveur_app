@@ -108,16 +108,14 @@ public class Plat {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
         Plat plat = (Plat) o;
-        return id == plat.id && Float.compare(plat.price, price) == 0 && Objects.equals(nom, plat.nom) && Objects.equals(description, plat.description) && Arrays.equals(img, plat.img) && Objects.equals(categorie, plat.categorie);
+        return id == plat.id;
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, nom, price, description, categorie);
-        result = 31 * result + Arrays.hashCode(img);
+        int result = Objects.hash(id, nom, price, description);
+        result = 31 * result;
         return result;
     }
 }
