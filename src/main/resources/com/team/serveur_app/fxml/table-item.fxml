@@ -8,7 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane stylesheets="@../css/platItemStyle.css"  prefHeight="60.0" prefWidth="60.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team.serveur_app.controller.TableItemController">
+<AnchorPane fx:id="tablePane" stylesheets="@../css/platItemStyle.css"  prefHeight="60.0" prefWidth="60.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.team.serveur_app.controller.table.TableItemController">
    <children>
       <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="30.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
          <image>

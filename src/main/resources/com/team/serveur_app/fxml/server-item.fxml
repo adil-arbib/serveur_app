@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="serverItem" prefHeight="125.0" prefWidth="177.0" stylesheets="@../css/platItemStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team.serveur_app.controller.serveur.ServerItemController">
+   <children>
+      <Label fx:id="nom_prenom" alignment="CENTER" layoutX="69.0" layoutY="33.0" text="Label" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font></Label>
+   </children>
+   <styleClass>
+      <String fx:value="plat-item" />
+      <String fx:value="shadow" />
+   </styleClass>
+</AnchorPane>

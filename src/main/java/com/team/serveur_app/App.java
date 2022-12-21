@@ -11,7 +11,7 @@ import java.io.IOException;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        StageManager.init(stage,"fxml/main-activity.fxml",true);
+        StageManager.init(stage,"fxml/login.fxml",false);
     }
 
     public static void main(String[] args) {

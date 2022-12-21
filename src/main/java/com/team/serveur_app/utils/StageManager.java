@@ -4,9 +4,13 @@ import com.team.serveur_app.App;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
+
+
 
 public final class StageManager {
     private  static Stage mainStage;
@@ -14,17 +18,19 @@ public final class StageManager {
 
     public static void init(Stage stage,String file, boolean resizable) throws IOException {
         mainStage = stage;
-        Parent loader = FXMLLoader.load(App.class.getResource(file));
+        Parent loader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource(file)));
         scene = new Scene(loader);
         mainStage.setResizable(resizable);
         mainStage.setScene(scene);
         mainStage.setResizable(resizable);
-        mainStage.setMaximized(true);
+        mainStage.getIcons().add(new Image("D:\\Codes\\serveur_app\\" +
+                "src\\main\\resources\\com\\team\\" +
+                "serveur_app\\img\\Los_Pollos_Hermanos_logo.png"));
         mainStage.show();
     }
 
     public static void replace(String file, boolean resizable, boolean maximized) throws IOException {
-        Parent loader = FXMLLoader.load(App.class.getResource(file));
+        Parent loader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource(file)));
         mainStage.close();
         scene = new Scene(loader);
         mainStage.setScene(scene);

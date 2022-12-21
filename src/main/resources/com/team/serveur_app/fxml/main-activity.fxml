@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -12,7 +13,7 @@
 
 <AnchorPane prefHeight="683.0" prefWidth="1183.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team.serveur_app.controller.mainActivity.MainActivityController">
    <children>
-      <ScrollPane layoutX="969.0" layoutY="23.0" prefHeight="463.0" prefWidth="310.0" style="-fx-background-color: #CDCDCD;" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
+      <ScrollPane layoutX="969.0" layoutY="23.0" prefHeight="463.0" prefWidth="304.0" style="-fx-background-color: #CDCDCD;" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
          <content>
             <GridPane fx:id="rightGridPane" hgap="5.0" maxWidth="-Infinity" prefHeight="181.0" />
          </content></ScrollPane>
@@ -22,7 +23,7 @@
             <Font name="Arial" size="25.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="1.0" layoutY="193.0" prefHeight="491.0" prefWidth="933.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="192.0">
+      <ScrollPane layoutX="1.0" layoutY="193.0" prefHeight="491.0" prefWidth="658.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="525.0" AnchorPane.topAnchor="192.0">
          <content>
             <GridPane fx:id="gridPane" hgap="5.0" maxWidth="-Infinity" prefHeight="181.0">
             </GridPane>
@@ -48,7 +49,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="tableLabel" layoutX="1115.0" layoutY="594.0" text="None" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="15.0">
+      <Label fx:id="tableLabel" layoutX="1115.0" layoutY="594.0" text="Aucune" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="15.0">
          <font>
             <Font size="15.0" />
          </font>
@@ -68,11 +69,36 @@
             <Font name="Arial" size="25.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="683.0" layoutY="121.0" prefHeight="563.0" prefWidth="214.0" style="-fx-background-color: #12F34C;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="120.0">
+      <ScrollPane layoutX="683.0" layoutY="121.0" prefHeight="463.0" prefWidth="224.0" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="301.0" AnchorPane.topAnchor="120.0">
          <content>
             <GridPane fx:id="tablesGridPane" hgap="2.0" maxWidth="-Infinity" prefHeight="181.0">
             </GridPane>
          </content>
       </ScrollPane>
+      <Label fx:id="label_nom_prenom" layoutX="40.0" layoutY="22.0" text="Nom et Prenom" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="22.0">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="logout" fitHeight="21.0" fitWidth="33.0" layoutX="1124.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="22.0">
+         <image>
+            <Image url="@../img/logout.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="1128.0" layoutY="49.0" text="Logout" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="45.0">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnPrint" layoutX="770.0" layoutY="602.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" styleClass="button-imp" stylesheets="@../css/button.css" text="Imprimer" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="323.0">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnSave" layoutX="669.0" layoutY="602.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" styleClass="button-eng" stylesheets="@../css/button.css" text="Enregistre" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="424.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

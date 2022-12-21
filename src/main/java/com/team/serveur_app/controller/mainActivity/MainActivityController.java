@@ -1,55 +1,66 @@
 package com.team.serveur_app.controller.mainActivity;
 
 import com.team.serveur_app.App;
-import com.team.serveur_app.controller.TableItemController;
+import com.team.serveur_app.controller.table.TableItemController;
 import com.team.serveur_app.controller.plat.AddedPlatController;
 import com.team.serveur_app.controller.plat.ItemPlatController;
 import com.team.serveur_app.model.categorie.Categorie;
 import com.team.serveur_app.model.categorie.CategorieDAO;
 import com.team.serveur_app.model.plat.Plat;
 import com.team.serveur_app.model.plat.PlatDAO;
+import com.team.serveur_app.model.reservation.ReservationDAO;
+import com.team.serveur_app.model.serveur.Serveur;
 import com.team.serveur_app.model.table.Table;
 import com.team.serveur_app.model.table.TableDAO;
-import com.team.serveur_app.utils.CancelPlatListener;
-import com.team.serveur_app.utils.MinusClickListener;
-import com.team.serveur_app.utils.PlatOnClickListener;
-import com.team.serveur_app.utils.PlusClickListener;
+import com.team.serveur_app.utils.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class MainActivityController implements Initializable, PlatOnClickListener,
-        PlusClickListener, MinusClickListener, CancelPlatListener
+        PlusClickListener, MinusClickListener, CancelPlatListener, OnTableClickedListener
 {
     @FXML
     GridPane gridPane, rightGridPane, tablesGridPane;
     @FXML
     ListView<Label> horizontalListView;
     @FXML
-    Label  totalLabel, itemsLabel, tableLabel;
+    Label  totalLabel, itemsLabel, tableLabel, label_nom_prenom;
+
+    @FXML
+    ImageView logout;
+
+    @FXML
+    Button btnSave, btnPrint;
+
     private ArrayList<Categorie> availableCategories;
     private ArrayList<Table> availableTables;
     private final ArrayList<Plat> selectedPlats = new ArrayList<>();
     private final Map<Integer, AddedPlatController> addedPlatHashMap = new HashMap<>();
     private final Map<Plat, AnchorPane> anchorPaneMap = new HashMap<>();
     private final ObservableList<Label> categoriesList = FXCollections.observableArrayList();
-    private final ArrayList<AnchorPane> nodes = new ArrayList<>();
+    private ReservationDAO reservationDAO;
+    private Serveur currentServeur;
+    private Table selectedTable;
+    private float totalPrice = 0;
 
 
     @Override
@@ -68,8 +79,71 @@ public class MainActivityController implements Initializable, PlatOnClickListene
 
         try {
             displayTables();
-        } catch (SQLException | IOException e) {}
+        } catch (SQLException | IOException ignored) {}
 
+        currentServeur = (Serveur) Bundle.getInstance().get("currentServer");
+
+        label_nom_prenom.setText(currentServeur.getNom()+" "+currentServeur.getPrenom());
+
+
+        logout.setOnMouseClicked(e -> {
+            try {
+                StageManager.replace("fxml/login.fxml",false, false);
+            } catch (IOException ex) {}
+        });
+
+        btnSave.setOnMouseClicked(e -> {
+            if(handleInputs()) {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                reservationDAO = new ReservationDAO(
+                        df.format(new Date()),
+                        totalPrice,
+                        currentServeur,
+                        selectedTable,
+                        new ArrayList<>(selectedPlats)
+                );
+                try {
+                    int id = reservationDAO.add();
+                    reservationDAO.setId(id);
+                } catch (SQLException | ParseException ignored) {}
+                resetActivity();
+
+
+
+            }
+        });
+
+        btnPrint.setOnMouseClicked(e -> {
+            GeneratePdf.print(reservationDAO);
+        });
+
+
+    }
+
+
+    private void resetActivity() {
+        rightGridPane.getChildren().clear();
+        selectedPlats.clear();
+        addedPlatHashMap.clear();
+        anchorPaneMap.clear();
+        selectedTable = null;
+
+        rightGridPane.getChildren().clear();
+
+        tableLabel.setText("Aucune");
+        itemsLabel.setText("0");
+        totalLabel.setText("0 DH");
+    }
+
+
+
+
+    private boolean handleInputs() {
+        boolean check = false;
+        if(selectedTable == null) showError("sélectionner une table !!");
+        else if(selectedPlats.isEmpty()) showError("sélectionner les plats");
+        else check = true;
+        return check;
     }
 
 
@@ -81,7 +155,7 @@ public class MainActivityController implements Initializable, PlatOnClickListene
             loader.setLocation(App.class.getResource("fxml/table-item.fxml"));
             AnchorPane anchorPane = loader.load();
             TableItemController itemController = loader.getController();
-            itemController.setData(table.getNum());
+            itemController.setData(table, MainActivityController.this);
             if(column == 2){
                 column = 0;
                 row ++;
@@ -91,10 +165,12 @@ public class MainActivityController implements Initializable, PlatOnClickListene
         }
     }
 
+
+
+
     private void displayAssociatedPlats(Categorie category) throws SQLException {
-        gridPane.getChildren().removeAll(nodes);
+        gridPane.getChildren().clear();
         ArrayList<Plat> plats = PlatDAO.selectPLatByIdCat(category.getId());
-        nodes.clear();
         int row = 0 , column = 0;
         try {
             for(Plat plat : plats){
@@ -108,7 +184,6 @@ public class MainActivityController implements Initializable, PlatOnClickListene
                     row++;
                 }
                 gridPane.add(anchorPane, column++, row);
-                nodes.add(anchorPane);
                 GridPane.setMargin(anchorPane, new Insets(10));
             }
 
@@ -152,7 +227,7 @@ public class MainActivityController implements Initializable, PlatOnClickListene
      * calculate total price, total items
      */
     private void calculate(){
-        int totalPrice = 0;
+        totalPrice = 0;
         for(Plat plat : selectedPlats) totalPrice += plat.getPrice();
         totalLabel.setText(totalPrice+" DH");
         itemsLabel.setText(selectedPlats.size()+"");
@@ -212,4 +287,25 @@ public class MainActivityController implements Initializable, PlatOnClickListene
         addedPlatHashMap.remove(plat.getId());
         calculate();
     }
+
+    @Override
+    public void onTableClicked(Table table) {
+        selectedTable = table;
+        tableLabel.setText(table.getNum()+"");
+    }
+
+
+
+    private void showMessage(String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
+    private void showError(String text) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
 }

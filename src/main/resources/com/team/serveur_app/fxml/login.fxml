@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team.serveur_app.controller.login.LoginController">
+   <children>
+   
+       <ScrollPane layoutX="683.0" layoutY="121.0" prefHeight="360.0" prefWidth="560.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+           <content>
+               <GridPane fx:id="serveursGridPane" hgap="2.0" maxWidth="-Infinity" prefHeight="181.0">
+            </GridPane>
+           </content>
+       </ScrollPane>
+   </children>
+
+</AnchorPane>

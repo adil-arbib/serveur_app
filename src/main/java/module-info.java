@@ -2,7 +2,7 @@ module com.team.serveur_app {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
-
+    requires itextpdf;
 
 
     opens com.team.serveur_app.model.serveur to javafx.base;
@@ -14,6 +14,8 @@ module com.team.serveur_app {
     exports com.team.serveur_app.utils;
 
     exports com.team.serveur_app.model.plat;
+    exports com.team.serveur_app.model.serveur;
+    exports com.team.serveur_app.model.table;
 
     opens com.team.serveur_app.utils to javafx.fxml;
 
@@ -29,6 +31,7 @@ module com.team.serveur_app {
     opens com.team.serveur_app.controller.mainActivity;
     exports com.team.serveur_app.controller.table to javafx.fxml;
     opens com.team.serveur_app.controller.table;
+    exports com.team.serveur_app.controller.login to javafx.fxml;
+    opens com.team.serveur_app.controller.login;
 
-    exports com.team.serveur_app.controller to javafx.fxml;
 }
