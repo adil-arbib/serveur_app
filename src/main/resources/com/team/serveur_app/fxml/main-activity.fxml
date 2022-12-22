@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="683.0" prefWidth="1183.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team.serveur_app.controller.mainActivity.MainActivityController">
    <children>
-      <ScrollPane layoutX="969.0" layoutY="23.0" prefHeight="463.0" prefWidth="304.0" style="-fx-background-color: #CDCDCD;" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
+      <ScrollPane layoutX="969.0" layoutY="23.0" prefHeight="463.0" prefWidth="304.0" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
          <content>
             <GridPane fx:id="rightGridPane" hgap="5.0" maxWidth="-Infinity" prefHeight="181.0" />
          </content></ScrollPane>
@@ -29,7 +29,7 @@
             </GridPane>
          </content>
       </ScrollPane>
-      <Label layoutX="933.0" layoutY="81.0" text="Commande" AnchorPane.rightAnchor="110.0" AnchorPane.topAnchor="81.0">
+      <Label layoutX="933.0" layoutY="81.0" text="Commande" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="81.0">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
@@ -64,7 +64,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="714.0" layoutY="74.0" text="Tables" AnchorPane.rightAnchor="393.0" AnchorPane.topAnchor="81.0">
+      <Label layoutX="714.0" layoutY="74.0" text="Tables" AnchorPane.rightAnchor="382.0" AnchorPane.topAnchor="81.0">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
@@ -75,9 +75,9 @@
             </GridPane>
          </content>
       </ScrollPane>
-      <Label fx:id="label_nom_prenom" layoutX="40.0" layoutY="22.0" text="Nom et Prenom" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="22.0">
+      <Label fx:id="label_nom_prenom" layoutX="140.0" layoutY="19.0" text="Nom et Prenom" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="24.0">
          <font>
-            <Font name="System Italic" size="18.0" />
+            <Font name="System Bold Italic" size="17.0" />
          </font>
       </Label>
       <ImageView fx:id="logout" fitHeight="21.0" fitWidth="33.0" layoutX="1124.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="22.0">
@@ -100,5 +100,10 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <Label layoutX="18.0" layoutY="24.0" text="Serveur :" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="25.0">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -57,10 +57,13 @@ public class MainActivityController implements Initializable, PlatOnClickListene
     private final Map<Integer, AddedPlatController> addedPlatHashMap = new HashMap<>();
     private final Map<Plat, AnchorPane> anchorPaneMap = new HashMap<>();
     private final ObservableList<Label> categoriesList = FXCollections.observableArrayList();
+    private final Map<Categorie , Label> labelMap = new HashMap<>();
     private ReservationDAO reservationDAO;
     private Serveur currentServeur;
     private Table selectedTable;
     private float totalPrice = 0;
+    private Label recentLabel;
+    private boolean saved = false;
 
 
     @Override
@@ -71,7 +74,14 @@ public class MainActivityController implements Initializable, PlatOnClickListene
         horizontalListView.setOnMouseClicked(event -> {
             int index = horizontalListView.getSelectionModel().getSelectedIndex();
             try {
-                displayAssociatedPlats(availableCategories.get(index));
+                Categorie categorie = availableCategories.get(index);
+                displayAssociatedPlats(categorie);
+                recentLabel.getStylesheets().clear();
+                recentLabel.getStylesheets().add(App.class.getResource("css/labelStyle.css").toExternalForm());
+                Label label = labelMap.get(categorie);
+                label.getStylesheets()
+                        .add(App.class.getResource("css/labelSelected.css").toExternalForm());
+                recentLabel = label;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -88,7 +98,7 @@ public class MainActivityController implements Initializable, PlatOnClickListene
 
         logout.setOnMouseClicked(e -> {
             try {
-                StageManager.replace("fxml/login.fxml",false, false);
+                StageManager.replace("fxml/login.fxml",false, false,"login");
             } catch (IOException ex) {}
         });
 
@@ -107,18 +117,23 @@ public class MainActivityController implements Initializable, PlatOnClickListene
                     reservationDAO.setId(id);
                 } catch (SQLException | ParseException ignored) {}
                 resetActivity();
-
+                showMessage("enregistré avec success !!");
 
 
             }
         });
 
         btnPrint.setOnMouseClicked(e -> {
-            GeneratePdf.print(reservationDAO);
+            if(reservationDAO != null) {
+                GeneratePdf.print(reservationDAO);
+                showMessage("votre ticket est prêt à retirer !!");
+            }
         });
 
 
     }
+
+
 
 
     private void resetActivity() {
@@ -194,10 +209,18 @@ public class MainActivityController implements Initializable, PlatOnClickListene
         try {
             availableCategories = CategorieDAO.getAll();
             for(Categorie category : availableCategories){
-                categoriesList.add(getCustomLabel(category.getLibelle()));
+                Label label = getCustomLabel(category.getLibelle());
+                categoriesList.add(label);
+                labelMap.put(category, label);
             }
             horizontalListView.setItems(categoriesList);
-            if(availableCategories.size()>0)displayAssociatedPlats(availableCategories.get(0));
+            if(availableCategories.size()>0){
+                Categorie categorie = availableCategories.get(0);
+                displayAssociatedPlats(categorie);
+                Label label = labelMap.get(categorie);
+                label.getStylesheets().add(App.class.getResource("css/labelSelected.css").toExternalForm());
+                recentLabel = label;
+            }
         } catch (SQLException e) {}
 
 
@@ -205,9 +228,9 @@ public class MainActivityController implements Initializable, PlatOnClickListene
 
 
 
-//    private void changeColor(Label label) {
-//        label.getStylesheets().add(App.class.getResource("css/labelSelected.css").toExternalForm());
-//    }
+    private void changeColor(Label label) {
+        label.getStylesheets().add(App.class.getResource("css/labelSelected.css").toExternalForm());
+    }
 
     private Label getCustomLabel(String name){
         Label label = new Label(name);
@@ -298,12 +321,16 @@ public class MainActivityController implements Initializable, PlatOnClickListene
 
     private void showMessage(String text) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success !!");
+        alert.setHeaderText(null);
         alert.setContentText(text);
         alert.showAndWait();
     }
 
     private void showError(String text) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur !!");
+        alert.setHeaderText(null);
         alert.setContentText(text);
         alert.showAndWait();
     }

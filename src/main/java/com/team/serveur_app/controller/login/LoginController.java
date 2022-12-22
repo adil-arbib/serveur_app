@@ -71,6 +71,6 @@ public class LoginController implements Initializable, ServerOnClickListener {
     public void onServerClick(Serveur serveur) throws IOException {
         Bundle bundle = Bundle.getInstance();
         bundle.put("currentServer",serveur);
-        StageManager.replace("fxml/main-activity.fxml",true,true);
+        StageManager.replace("fxml/main-activity.fxml",true,true,"Home");
     }
 }

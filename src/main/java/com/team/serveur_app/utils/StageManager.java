@@ -16,12 +16,13 @@ public final class StageManager {
     private  static Stage mainStage;
     private static Scene scene;
 
-    public static void init(Stage stage,String file, boolean resizable) throws IOException {
+    public static void init(Stage stage,String file, boolean resizable, String title) throws IOException {
         mainStage = stage;
         Parent loader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource(file)));
         scene = new Scene(loader);
         mainStage.setResizable(resizable);
         mainStage.setScene(scene);
+        mainStage.setTitle(title);
         mainStage.setResizable(resizable);
         mainStage.getIcons().add(new Image("D:\\Codes\\serveur_app\\" +
                 "src\\main\\resources\\com\\team\\" +
@@ -29,11 +30,12 @@ public final class StageManager {
         mainStage.show();
     }
 
-    public static void replace(String file, boolean resizable, boolean maximized) throws IOException {
+    public static void replace(String file, boolean resizable, boolean maximized, String title) throws IOException {
         Parent loader = FXMLLoader.load(Objects.requireNonNull(App.class.getResource(file)));
         mainStage.close();
         scene = new Scene(loader);
         mainStage.setScene(scene);
+        mainStage.setTitle(title);
         mainStage.setResizable(resizable);
         mainStage.setMaximized(maximized);
         mainStage.show();

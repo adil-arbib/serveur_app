@@ -1,11 +1,11 @@
 package com.team.serveur_app.utils;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfBody;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.team.serveur_app.model.plat.Plat;
 import com.team.serveur_app.model.reservation.ReservationDAO;
+import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,7 +21,6 @@ public class GeneratePdf
         Document doc = new Document();
         try
         {
-            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
             PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(
                     "D:\\"+"reservation"+reservation.getId()+".pdf"));
 
@@ -29,17 +28,7 @@ public class GeneratePdf
 
 
             doc.open();
-            doc.add(new Paragraph("************************************"));
-            System.out.println(reservation.getListPlat());
-            for(Plat plat : reservation.getListPlat()) {
-                doc.add(new Paragraph(String.format("%"+(-30)+"s", plat.getNom()) + plat.getPrice()));
-            }
-            doc.add(new Paragraph("************************************"));
-            doc.add(new Paragraph("Total : "+reservation.getPrice() + " DH"));
-            doc.add(new Paragraph("************************************"));
-            doc.add(new Paragraph(String.format("%"+(-30)+"s","Serveur :")+reservation.getServeur().getNom()));
-            doc.add(new Paragraph("Date : "+String.format("%"+(-30)+"s", reservation.getDate())));
-            doc.add(new Paragraph("Merci pour votre visite"));
+            doc.add(new Paragraph(getContent(reservation)));
             doc.close();
             writer.close();
         }
@@ -47,5 +36,42 @@ public class GeneratePdf
         {
             e.printStackTrace();
         }
+
+
+
+
+
     }
+
+    private static String show(String str) {
+        return str + " ".repeat(110 - str.length());
+    }
+
+
+    private static String getContent(ReservationDAO res) {
+        String content = "";
+        content += "*".repeat(110);
+        for(Plat plat : res.getListPlat()) {
+            content += "\n" + show(plat.getNom()) + plat.getPrice() + " DH";
+        }
+        content += "\n" + "*".repeat(110);
+
+        content += "\n" + show("Total :") + res.getPrice() + " DH";
+        content += "\n" + "*".repeat(110);
+
+        content += "\n" + show("Serveur :") + res.getServeur().getNom();
+        content += "\n" + show("Table :") + res.getTable().getNum();
+        content += "\n" + show("Date :") + res.getDate();
+        content += "\n" +"*".repeat(110);
+
+        content+= "\n"+"Merci pour votre visite";
+
+        return content;
+    }
+
+
+
+
+
+
 }  
